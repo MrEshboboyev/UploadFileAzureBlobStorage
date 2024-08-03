@@ -14,7 +14,7 @@ namespace UploadFileAzureBlobStorage.Services.BlobStorage
         }
 
         public async Task<AzureBlobResponse> UploadFileAsync(string blobContainer, 
-            string directoryName, string fileName, string fileStream)
+            string directoryName, string fileName, Stream fileStream)
         {
             var blobResponse = new AzureBlobResponse();
 
