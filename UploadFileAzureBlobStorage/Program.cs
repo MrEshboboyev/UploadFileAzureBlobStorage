@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Azure;
 using UploadFileAzureBlobStorage.Services.BlobStorage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// add azure clients
+builder.Services.AddAzureClients(clientBuilder =>
+{
+    clientBuilder.AddBlobServiceClient(builder.Configuration["ConnectionStrings:blob"]);
+});
 
 // adding lifetime for IAzureBlobService
 builder.Services.AddScoped<IAzureBlobService, AzureBlobService>();
