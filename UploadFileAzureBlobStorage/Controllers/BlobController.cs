@@ -37,5 +37,49 @@ namespace UploadFileAzureBlobStorage.Controllers
 
             return Ok(result);
         }
+        
+        [HttpPost("uploadWithoutFolder"), DisableRequestSizeLimit]
+        public async Task<IActionResult> UploadFileWithoutFolder([FromForm] FileUploadModel model)
+        {
+            // checking file is valid
+            if (model.File == null ||  model.File.Length == 0)
+            {
+                return BadRequest("Invalid File!");
+            }
+
+            var fileStream = model.File.OpenReadStream();
+
+            var result = await _azureBlobService.UploadFileAsync("blobupload", "",
+                model.File.FileName, fileStream);
+
+            if(result.IsError)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+        
+        [HttpPost("uploadWithManyFolder"), DisableRequestSizeLimit]
+        public async Task<IActionResult> UploadFileManyFolder([FromForm] FileUploadModel model)
+        {
+            // checking file is valid
+            if (model.File == null ||  model.File.Length == 0)
+            {
+                return BadRequest("Invalid File!");
+            }
+
+            var fileStream = model.File.OpenReadStream();
+
+            var result = await _azureBlobService.UploadFileAsync("blobupload", "folder1/folder2/folder3",
+                model.File.FileName, fileStream);
+
+            if(result.IsError)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
     }
 }
