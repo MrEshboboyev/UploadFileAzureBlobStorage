@@ -27,7 +27,7 @@ namespace UploadFileAzureBlobStorage.Controllers
 
             var fileStream = model.File.OpenReadStream();
 
-            var result = await _azureBlobService.UploadFileAsync("blobUpload", "myNewFolder",
+            var result = await _azureBlobService.UploadFileAsync("blobupload", "mynewfolder",
                 model.File.FileName, fileStream);
 
             if(result.IsError)
